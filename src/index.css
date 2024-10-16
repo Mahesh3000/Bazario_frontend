@@ -125,6 +125,16 @@ form button[type='button'] {
   font-weight: 600;
 }
 
+.login-button{
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 30px;
+  font-weight: 600;
+}
 
 .login-center-options{
   display: flex;
@@ -284,17 +294,127 @@ form button[type='button'] {
 .nav-links li a:hover {
   color: #61dafb; /* Light blue on hover */
 }
-
-.logout {
-  margin-left: auto; /* Pushes the logout to the right */
+/* Header.css */
+.header {
+  display: flex;
+  justify-content: space-between; /* Space between items */
+  align-items: center; /* Center vertically */
+  padding: 10px 20px; /* Add some padding */
+  background-color: #010910; /* Blue background */
+  color: white; /* Text color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.logout a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s;
+.header-icon {
+  font-size: 24px; /* Icon size */
 }
 
-.logout a:hover {
-  color: #61dafb; /* Light blue on hover */
+.header-logo {
+  font-size: 24px; /* Logo font size */
+  font-weight: bold; /* Make logo bold */
 }
+
+.header-nav {
+  flex-grow: 1; /* Allow the nav to grow */
+  text-align: center; /* Center align the items */
+}
+
+.header-nav ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  display: flex; /* Flexbox for the items */
+  justify-content: center; /* Center items */
+}
+
+.header-nav li {
+  margin: 0 20px; /* Spacing between items */
+  font-size: 18px; /* Font size */
+}
+
+.header-logout {
+  background-color: #ff4d4d; /* Red logout button color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  padding: 8px 16px; /* Padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.header-logout:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+
+ 
+/* Dashboard start */
+
+.dashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.product-list {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 20px; /* Space between items */
+  overflow-y: auto; /* Enable vertical scrolling if necessary */
+  max-height: 80vh; /* Limit the height for scrolling */
+  padding: 10px;
+  width: 80%; /* Set a specific width for the product list */
+  max-width: 600px; /* Maximum width for larger screens */
+  border: 1px solid #ddd; /* Optional: Add border around the product list */
+}
+
+.product-card {
+  background-color: #ffffff; /* White background for product card */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow */
+  padding: 15px;
+  width: 100%; /* Full width of the parent .product-list */
+  text-align: left; /* Left-align text */
+  transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.product-card:hover {
+  transform: scale(1.02); /* Slightly enlarge card on hover */
+}
+
+.product-image {
+  max-width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px; /* Optional: rounded corners for images */
+}
+
+.product-name {
+  font-size: 1.2em; /* Larger font size for product name */
+  margin: 10px 0; /* Vertical spacing */
+}
+
+.product-description {
+  color: #555; /* Gray color for description */
+  font-size: 0.9em; /* Smaller font size for description */
+  margin-bottom: 10px; /* Bottom spacing */
+}
+
+.product-price {
+  font-weight: bold; /* Bold price */
+  color: #000; /* Black color for price */
+}
+
+.product-category {
+  font-size: 0.9em; /* Smaller font size for category */
+  color: #777; /* Light gray color for category */
+}
+
+.error {
+  color: red; /* Red color for error messages */
+  margin: 10px 0; /* Vertical spacing */
+}
+
+
+/* Dashboard end */

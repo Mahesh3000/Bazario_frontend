@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
+import { API_URLS } from "./constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,14 +24,14 @@ const Login = () => {
   // console.log("mahesh", username, password);
 
   const handleLogin = async (e) => {
-    // e.preventDefault();
-    // setError(false);
-    // setMessage("");
+    e.preventDefault();
+    setError(false);
+    setMessage("");
 
     try {
       if (username && password) {
         // Send POST request to the backend
-        const response = await axios.post("http://localhost:4000/users", {
+        const response = await axios.post(`${API_URLS.LOGIN_API_URL}`, {
           username,
           password,
         });
@@ -40,8 +41,7 @@ const Login = () => {
             setError(!error);
             setMessage(response?.data?.message);
           } else if (response?.data?.success === true) {
-            // setError(!error);
-            // navigate("/home");
+            navigate("/dashboard");
             console.log("mahesh");
           }
         } else {
@@ -69,7 +69,7 @@ const Login = () => {
           <div className="login-center">
             <h2>Login!</h2>
             <p>Please enter your details</p>
-            <form>
+            <form onSubmit={handleLogin}>
               <input
                 type="username"
                 placeholder="Username"
@@ -109,7 +109,7 @@ const Login = () => {
                 </a>
               </div>
               <div className="login-center-buttons">
-                <button type="button" onClick={handleLogin}>
+                <button className="login-button" type="submit">
                   Log In
                 </button>
                 {/* <button type="button">
