@@ -18,8 +18,12 @@ const Header = () => {
       <div className="header-logo">Bazario</div> {/* Logo Name */}
       <nav className="header-nav">
         <ul>
-          <li onClick={() => navigate("/dashboard")}>Dashboard</li>
-          <li onClick={() => navigate("/Orders")}>Orders</li>
+          <li className="hover_text" onClick={() => navigate("/dashboard")}>
+            Dashboard
+          </li>
+          <li className="hover_text" onClick={() => navigate("/Orders")}>
+            Orders
+          </li>
         </ul>
       </nav>
       <button className="header-logout" onClick={handleLogout}>

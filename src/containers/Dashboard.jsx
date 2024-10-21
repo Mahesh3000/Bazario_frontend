@@ -1,12 +1,35 @@
 import React, { memo, useEffect, useState } from "react";
 import Header from "./Headers";
 import axios from "axios";
+import { API_URLS } from "./constants";
+import Cart from "./Cart";
 
 const Dashboard = () => {
   const [mainProducts, setMainProducts] = useState([]);
   const [categories, setCategories] = useState([]); // Array of categories
-  const [cartItems, setCartItems] = useState([]); // Array of categories
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const users = localStorage.getItem("pavan");
+    const parsedUser = JSON.parse(users);
+    setUser(parsedUser);
+  }, []);
+
+  // console.log("user", user);
+
+  // Function to increase quantity
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  // Function to decrease quantity (minimum 1)
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   useEffect(() => {
     // Fetch data from the API
@@ -50,8 +73,6 @@ const Dashboard = () => {
     });
   };
 
-  console.log("e.target.value", selectedCategories);
-
   const filteredProducts =
     selectedCategories.length === 0
       ? mainProducts
@@ -59,9 +80,18 @@ const Dashboard = () => {
           selectedCategories.includes(product.category)
         );
 
-  const handleAddToCart = (product) => {
-    console.log("product", product);
+  const handleAddToCart = async (product) => {
+    try {
+      // const
+      const response = await axios.post(`${API_URLS.ADD_TO_CART_URL}`, {
+        userId: user.id,
+        productId: product.id,
+        quantity: quantity,
+      });
+    } catch {}
   };
+
+  console.log("mahesh", mainProducts);
 
   return (
     <div>
@@ -106,9 +136,38 @@ const Dashboard = () => {
                     <p>${product.price}</p>
                     <p>{product.category}</p>
                   </div>
-                  <button onClick={() => handleAddToCart(product)}>
-                    Add to Cart
-                  </button>
+                  <div>
+                    <div className="quantity-container">
+                      <button
+                        onClick={decreaseQuantity}
+                        disabled={quantity <= 1}
+                        className={
+                          quantity <= 1 ? "cart-disabled-button" : "cart-button"
+                        }
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        value={quantity}
+                        readOnly
+                        className="cart-input"
+                      />
+                      <button
+                        onClick={increaseQuantity}
+                        className="cart-button"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      className="add-to-cart-button"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               ))
           ) : (
@@ -117,19 +176,8 @@ const Dashboard = () => {
         </div>
 
         {/* Right section: Cart */}
-        <div className="cart">
-          <h2>Cart</h2>
-          {cartItems.length > 0 ? (
-            cartItems.map((item, index) => (
-              <div key={index} className="cart-item">
-                <h4>{item.name}</h4>
-                <p>Price: ${item.price}</p>
-              </div>
-            ))
-          ) : (
-            <p>Your cart is empty.</p>
-          )}
-        </div>
+
+        <Cart />
       </div>
     </div>
   );

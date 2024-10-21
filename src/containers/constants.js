@@ -12,6 +12,7 @@ const LOGIN_ERRORS = {
 const API_URLS = {
   SIGNUP_API_URL: "http://localhost:4000/signup",
   LOGIN_API_URL: "http://localhost:4000/login",
+  ADD_TO_CART_URL: "http://localhost:4000/add-to-cart",
 };
 
 export { LOGIN_ERRORS, API_URLS };

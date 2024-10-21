@@ -35,14 +35,17 @@ const Login = () => {
           username,
           password,
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           if (!response.data.success) {
             setError(!error);
             setMessage(response?.data?.message);
           } else if (response?.data?.success === true) {
             navigate("/dashboard");
-            console.log("mahesh");
+            const userDetails = JSON.stringify(response?.data?.data[0]); // Convert user object to a JSON string
+            const user = JSON.parse(userDetails);
+            const username = user.username;
+            localStorage.setItem(username, userDetails);
           }
         } else {
         }
