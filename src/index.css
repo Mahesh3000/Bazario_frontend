@@ -413,7 +413,10 @@ form button[type='button'] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  position: relative; /* Make it relative to position the button */
 }
+
+ 
 
 .category-item {
   margin-bottom: 10px;
@@ -486,14 +489,14 @@ form button[type='button'] {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 10px;
+  padding: 7px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 40px;
+  margin-left: 80px;
   /* margin-top: /10px; Space above the button */
 }
 
@@ -507,4 +510,25 @@ form button[type='button'] {
   cursor: not-allowed;
 }
 
+.cart-item-image{
+  height: 50px;
+  width: 50px;
+}
+
+.remove-item-button {
+  background: none; /* No background */
+  border: none; /* No border */
+  color: rgb(0, 0, 0); /* Change color as needed */
+  font-size: 20px; /* Size of the "X" */
+  cursor: pointer; /* Pointer cursor on hover */
+  position: absolute; /* Allows positioning relative to the cart-item */
+  top: 5px; /* Adjust as necessary */
+  right: 5px; /* Adjust as necessary */
+}
+
+.cart-component{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 /* Cart css ends here */

@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ user }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     // Your logout logic here
     console.log("User logged out");
+    localStorage.removeItem(user?.username);
     navigate("/");
   };
 

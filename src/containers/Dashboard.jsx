@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [user, setUser] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const users = localStorage.getItem("pavan");
@@ -20,20 +21,29 @@ const Dashboard = () => {
   // console.log("user", user);
 
   // Function to increase quantity
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+  const increaseQuantity = (productId) => {
+    setQuantity((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 1) + 1,
+    }));
   };
 
+  console.log("quantity", quantity);
+
   // Function to decrease quantity (minimum 1)
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+  const decreaseQuantity = (productId) => {
+    setQuantity((prevQuantities) => {
+      const currentQuantity = prevQuantities[productId] || 1;
+      return {
+        ...prevQuantities,
+        [productId]: Math.max(currentQuantity - 1, 1),
+      };
+    });
   };
 
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:4000/products")
+    fetch(`${API_URLS.GET_PRODUCTS_URL}`)
       .then((response) => {
         // Check if the response is ok (status code 200-299)
         if (!response.ok) {
@@ -82,20 +92,27 @@ const Dashboard = () => {
 
   const handleAddToCart = async (product) => {
     try {
-      // const
+      console.log("product", product, quantity[product?.id]);
+
       const response = await axios.post(`${API_URLS.ADD_TO_CART_URL}`, {
-        userId: user.id,
-        productId: product.id,
-        quantity: quantity,
+        userId: user?.id,
+        productId: product?.id,
+        quantities: quantity[product?.id] || 1,
       });
+
+      console.log("response", response?.status);
+      if (response?.status === 200) {
+        const response = await axios.get(`${API_URLS.CART_URL}/${user?.id}`);
+        setCartItems(response?.data?.data);
+      }
     } catch {}
   };
 
-  console.log("mahesh", mainProducts);
+  // console.log("mahesh", mainProducts);
 
   return (
     <div>
-      <Header />
+      <Header user={user} />
       <div className="dashboard">
         {/* Left section: Categories */}
         <div className="categories">
@@ -139,22 +156,24 @@ const Dashboard = () => {
                   <div>
                     <div className="quantity-container">
                       <button
-                        onClick={decreaseQuantity}
-                        disabled={quantity <= 1}
+                        onClick={() => decreaseQuantity(product?.id)}
+                        disabled={quantity[product.id] <= 1}
                         className={
-                          quantity <= 1 ? "cart-disabled-button" : "cart-button"
+                          quantity[product?.id] <= 1
+                            ? "cart-disabled-button"
+                            : "cart-button"
                         }
                       >
                         -
                       </button>
                       <input
                         type="text"
-                        value={quantity}
+                        value={quantity[product.id] || 1}
                         readOnly
                         className="cart-input"
                       />
                       <button
-                        onClick={increaseQuantity}
+                        onClick={() => increaseQuantity(product?.id)}
                         className="cart-button"
                       >
                         +
@@ -176,8 +195,7 @@ const Dashboard = () => {
         </div>
 
         {/* Right section: Cart */}
-
-        <Cart />
+        <Cart user={user} cartItems={cartItems} setCartItems={setCartItems} />
       </div>
     </div>
   );
