@@ -45,6 +45,7 @@ const Login = () => {
             const userDetails = JSON.stringify(response?.data?.data[0]); // Convert user object to a JSON string
             const user = JSON.parse(userDetails);
             const username = user.username;
+            localStorage.setItem("authToken", response?.data?.token);
             localStorage.setItem(username, userDetails);
           }
         } else {

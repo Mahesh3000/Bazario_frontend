@@ -14,6 +14,7 @@ const API_URLS = {
   LOGIN_API_URL: "http://localhost:4000/login",
   ADD_TO_CART_URL: "http://localhost:4000/add-to-cart",
   CART_URL: "http://localhost:4000/cart",
+  PLACE_ORDERS_URL: "http://localhost:4000/placeorder",
   GET_PRODUCTS_URL: "http://localhost:4000/products",
 };
 

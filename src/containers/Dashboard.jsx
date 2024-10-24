@@ -28,8 +28,6 @@ const Dashboard = () => {
     }));
   };
 
-  console.log("quantity", quantity);
-
   // Function to decrease quantity (minimum 1)
   const decreaseQuantity = (productId) => {
     setQuantity((prevQuantities) => {
@@ -63,7 +61,7 @@ const Dashboard = () => {
       .catch((error) => {
         console.error("Error fetching data:", error); // Handle any errors
       });
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategories((prevCategories) => {
@@ -107,8 +105,6 @@ const Dashboard = () => {
       }
     } catch {}
   };
-
-  // console.log("mahesh", mainProducts);
 
   return (
     <div>

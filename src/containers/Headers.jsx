@@ -5,8 +5,9 @@ const Header = ({ user }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     // Your logout logic here
-    console.log("User logged out");
+
     localStorage.removeItem(user?.username);
+    localStorage.removeItem("authToken");
     navigate("/");
   };
 

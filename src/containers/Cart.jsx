@@ -20,7 +20,10 @@ const Cart = ({ user, cartItems, setCartItems }) => {
     fetchCart();
   }, [userId]);
 
-  const handlePlaceOrders = (items) => {
+  const handlePlaceOrders = async (items) => {
+    if (items) {
+      const response = await axios.post(`${API_URLS.PLACE_ORDERS_URL}`);
+    }
     console.log("items", items);
   };
 
