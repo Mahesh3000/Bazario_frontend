@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./containers/Login";
-import SignUp from "./containers/Signup";
+import Login from "./containers/Login/index";
+import SignUp from "./containers/Login/Signup";
 import Dashboard from "./containers/Dashboard";
 import Orders from "./containers/Orders";
 import ProtectedRoute from "./containers/ProtectedRoute";

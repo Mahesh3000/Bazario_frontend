@@ -22,7 +22,7 @@ const Cart = ({ user, cartItems, setCartItems }) => {
 
   const handlePlaceOrders = async (items) => {
     if (items) {
-      const response = await axios.post(`${API_URLS.PLACE_ORDERS_URL}`);
+      const response = await axios.delete(`${API_URLS.PLACE_ORDERS_URL}`);
     }
     console.log("items", items);
   };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Image from "../assets/image.png";
-import Logo from "../assets/logo.png";
+import Image from "../../assets/image.png";
+import Logo from "../../assets/logo.png";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_URLS } from "./constants";
+import { API_URLS } from "../constants";
 
 const SignUp = () => {
   const navigate = useNavigate();
