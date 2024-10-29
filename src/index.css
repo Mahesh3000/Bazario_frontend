@@ -576,6 +576,7 @@ form button[type='button'] {
 
 
 /* Email.css starts here */
+
 /* Centering the entire page */
 .email-page {
   display: flex;
@@ -587,19 +588,45 @@ form button[type='button'] {
 
 /* Styling the container */
 .email-container {
+  position: relative; /* Needed for absolute positioning of back button */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px;
+  padding-top: 70px; /* Add padding to the top to make space for the back button */
   background-color: #ffffff;
-  border-radius: 15px;  /* Curved borders */
+  border-radius: 15px; /* Curved borders */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 300px;
+  width: 400px;
   text-align: center;
+}
+
+/* Back button styling */
+.back-button {
+  position: absolute; /* Positioned absolutely within the container */
+  top: 20px; /* Distance from the top */
+  left: 20px; /* Distance from the left */
+  font-size: 16px; /* Font size */
+  color: white; /* Text color */
+   background-color: black; /*Solid blue background */
+  border: none; /* No border */
+  padding: 10px 15px; /* Padding for better touch area */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s, transform 0.3s; /* Transitions for hover effects */
+  display: flex; /* Flex for aligning arrow and text */
+  align-items: center; /* Center text vertically */
+  gap: 5px; /* Space between arrow and text */
+}
+
+.back-button:hover {
+  background-color:black; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover for effect */
 }
 
 /* Heading */
 .email-container h2 {
+  margin-top: 20px; /* Add some margin at the top for spacing */
   margin-bottom: 20px;
   color: #333;
   font-size: 24px;
@@ -621,21 +648,22 @@ form button[type='button'] {
   border-color: #007bff;
 }
 
-/* Button styling */
+/* Email submit button styling */
 .email-submit-button {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  color: #ffffff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 8px;
+  color: white;
+  background-color: black; /* Black background */
+  border: 3px solid black; /* Solid border */
+  border-radius: 8px; /* Rounded corners */
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s; /* Added transition for color */
 }
 
 .email-submit-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  color: #333; /* Text color on hover */
+  background-color: white; /* Background changes to white on hover */
 }
 
 /* Email.css ends here */
