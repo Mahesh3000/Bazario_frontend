@@ -24,8 +24,7 @@ const SignUp = () => {
   const handlePhoneNumber = (e) => {
     const value = e.target.value;
 
-    // Allow only numbers using regex
-    if (/^\d*$/.test(value)) {
+    if (/^\d*$/.test(value) && value.length <= 10) {
       setPhoneNumber(value);
     }
   };

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"; // Import Axios
 import { API_URLS } from "../constants";
 import LeftSideContainer from "./LeftSideContainer";
+import { clearAuth, setEmail } from "../../redux";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -43,12 +44,11 @@ const Login = () => {
             setError(!error);
             setMessage(response?.data?.message);
           } else if (response?.data?.success === true) {
-            navigate("/onboarding");
             const userDetails = JSON.stringify(response?.data?.data[0]); // Convert user object to a JSON string
             const user = JSON.parse(userDetails);
             const emailId = user.email;
-            console.log("emailId", emailId);
-            dispatch(setEmail("user@example.com"));
+            // console.log("emailId", emailId);
+            dispatch(setEmail(emailId));
 
             try {
               const response = await axios.post(`${API_URLS.SEND_OTP_URL}`, {
@@ -56,6 +56,7 @@ const Login = () => {
               });
               setMessage(response.data.message);
               setIsOtpSent(true);
+              navigate("/onboarding");
             } catch (error) {
               setMessage(
                 error.response
@@ -64,7 +65,7 @@ const Login = () => {
               );
             }
             // const username = user.username;
-            // localStorage.setItem("authToken", response?.data?.token);
+            localStorage.setItem("authToken", response?.data?.token);
             localStorage.setItem(username, userDetails);
           }
         } else {

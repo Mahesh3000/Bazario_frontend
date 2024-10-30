@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { clearAuth } from "../redux";
+import { useDispatch } from "react-redux";
 
 const Header = ({ user }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    // Your logout logic here
+    dispatch(clearAuth());
 
     localStorage.removeItem(user?.username);
     localStorage.removeItem("authToken");

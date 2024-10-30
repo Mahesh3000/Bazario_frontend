@@ -1,14 +1,16 @@
 import React, { memo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { API_URLS } from "../constants";
+import axios from "axios";
 
 const Otp = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [otp, setOtp] = useState("");
-
+  const [message, setMessage] = useState("");
+  const [mobile, setMobile] = useState("");
   const emailId = useSelector((state) => state.auth.email);
-
-  console.log("mahesh", emailId);
 
   const handleBackClick = () => {
     navigate("/");
@@ -21,23 +23,30 @@ const Otp = () => {
     }
   };
 
-  // useEffect(() => {
-
-  // }, []);
-
-  const handleVerifyOtp = (e) => {
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
 
-    const users = localStorage.getItem("pavan");
-    const parsedUser = JSON.parse(users);
-    setUser(parsedUser);
-    console.log("mahesh");
+    setMessage("");
+    console.log("mahesh erri");
+    try {
+      const response = await axios.post(`${API_URLS.VERIFY_OTP_URL}`, {
+        email: emailId,
+        mobile: mobile,
+        otp: otp,
+      });
+
+      if (response.status === 200) {
+        setMessage("OTP verified successfully!");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Verification failed");
+    }
   };
 
-  const maskEmail = (user) => {
-    if (user?.email) {
-      const mailId = user.email;
-      const maskedEmail = mailId.slice(0, 2) + "********" + mailId.slice(-3);
+  const maskEmail = (emailId) => {
+    if (emailId) {
+      const maskedEmail = emailId.slice(0, 2) + "********" + emailId.slice(-3);
       return maskedEmail;
     }
   };
@@ -49,8 +58,9 @@ const Otp = () => {
           &#8592;
         </div>
         <form onSubmit={handleVerifyOtp}>
-          {/* <h2>Otp sent to {maskEmail(user)} and phone</h2> */}
-          <p className="otp-header">Otp sent to {maskEmail(user)} and phone</p>
+          <p className="otp-header">
+            Otp sent to {maskEmail(emailId)} and phone
+          </p>
 
           <input
             type="text"
@@ -59,6 +69,7 @@ const Otp = () => {
             value={otp}
             onChange={(e) => handleOtp(e)}
           />
+          <p>{message}</p>
           <button className="email-submit-button" type="submit">
             Verify
           </button>

@@ -1,6 +1,5 @@
-// import { combineReducers, createStore } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../reducers/authReducer";
+import authReducer from "../reducers/authReducers";
 
 // Combine all reducers (add more as needed)
 const store = configureStore({
