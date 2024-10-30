@@ -6,6 +6,7 @@ import Dashboard from "./containers/Dashboard";
 import Orders from "./containers/Orders";
 import ProtectedRoute from "./containers/ProtectedRoute";
 import NotFound from "./containers/NotFound";
+import Onboarding from "./containers/Onboarding";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/onboarding"
+          element={<ProtectedRoute element={<Onboarding />} />}
+        />
         <Route
           path="/dashboard"
           element={<ProtectedRoute element={<Dashboard />} />}

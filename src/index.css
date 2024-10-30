@@ -32,7 +32,19 @@ body{
 }
 
 .login-left img{
-  width: 400px;
+  width: 300px;
+}
+
+.carousel-container {
+  width: 50%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-image {
+  width: 50vw;
+  height: 100vh;
+  object-fit: cover;
 }
 
 .login-right{
@@ -597,8 +609,9 @@ form button[type='button'] {
   background-color: #ffffff;
   border-radius: 15px; /* Curved borders */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 400px;
+  width: 500px;
   text-align: center;
+  height: 300px;
 }
 
 /* Back button styling */
@@ -608,7 +621,7 @@ form button[type='button'] {
   left: 20px; /* Distance from the left */
   font-size: 16px; /* Font size */
   color: white; /* Text color */
-   background-color: black; /*Solid blue background */
+  background-color: black; /*Solid blue background */
   border: none; /* No border */
   padding: 10px 15px; /* Padding for better touch area */
   border-radius: 8px; /* Rounded corners */
@@ -640,6 +653,7 @@ form button[type='button'] {
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 15px;
+  margin-top: 10px;
   outline: none;
   transition: border 0.3s;
 }
@@ -664,6 +678,15 @@ form button[type='button'] {
 .email-submit-button:hover {
   color: #333; /* Text color on hover */
   background-color: white; /* Background changes to white on hover */
+}
+
+.otp-header{
+  font-size: 16px;
+   
+   margin-top: 20px; /* Add some margin at the top for spacing */
+  margin-bottom: 20px;
+  color: #333;
+  /* font-size: 24px; */
 }
 
 /* Email.css ends here */

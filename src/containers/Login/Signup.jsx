@@ -6,6 +6,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URLS } from "../constants";
+import LeftSideContainer from "./LeftSideContainer";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -13,11 +14,21 @@ const SignUp = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [onSignup, setOnSignup] = useState(false);
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // State for loading
+
+  const handlePhoneNumber = (e) => {
+    const value = e.target.value;
+
+    // Allow only numbers using regex
+    if (/^\d*$/.test(value)) {
+      setPhoneNumber(value);
+    }
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -27,6 +38,7 @@ const SignUp = () => {
       username,
       password,
       email,
+      phoneNumber,
     });
 
     if (response.status === 201) {
@@ -45,9 +57,7 @@ const SignUp = () => {
     <>
       {/* {loading && <p>Loading...</p>} */}
       <div className="login-main">
-        <div className="login-left">
-          <img src={Image} alt="" />
-        </div>
+        <LeftSideContainer />
         <div className="login-right">
           <div className="login-right-container">
             <div className="login-logo">
@@ -66,6 +76,12 @@ const SignUp = () => {
                   type="email"
                   placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => handlePhoneNumber(e)}
                 />
                 <div className="pass-input-div">
                   <input

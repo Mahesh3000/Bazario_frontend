@@ -16,6 +16,7 @@ const API_URLS = {
   CART_URL: "http://localhost:4000/cart",
   PLACE_ORDERS_URL: "http://localhost:4000/placeorder",
   GET_PRODUCTS_URL: "http://localhost:4000/products",
+  SEND_OTP_URL: "http://localhost:4000/send-otp",
 };
 
 export { LOGIN_ERRORS, API_URLS };
