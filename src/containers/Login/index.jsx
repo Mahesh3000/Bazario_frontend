@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"; // Import Axios
 import { API_URLS } from "../constants";
 import LeftSideContainer from "./LeftSideContainer";
-import { clearAuth, setEmail } from "../../redux";
+import { clearAuth, setEmail, setLoading, setUserData } from "../../redux";
+import Loading from "./Loading";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const emailId = useSelector((state) => state.auth.email);
+  const { emailId, isLoading } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [onSignup, setOnSignup] = useState(false);
@@ -28,9 +29,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setError(false);
     setMessage("");
-
     try {
       if (username && password) {
         // Send POST request to the backend
@@ -40,9 +41,12 @@ const Login = () => {
         });
         // console.log(response);
         if (response.status === 200) {
+          dispatch(setLoading(true));
+
           if (!response.data.success) {
             setError(!error);
             setMessage(response?.data?.message);
+            dispatch(setLoading(false));
           } else if (response?.data?.success === true) {
             const userDetails = JSON.stringify(response?.data?.data[0]); // Convert user object to a JSON string
             const user = JSON.parse(userDetails);
@@ -54,17 +58,22 @@ const Login = () => {
               const response = await axios.post(`${API_URLS.SEND_OTP_URL}`, {
                 emailId,
               });
-              setMessage(response.data.message);
-              setIsOtpSent(true);
-              navigate("/onboarding");
+              // setMessage(response.data.message);
+              if (response?.data.success === true) {
+                setIsOtpSent(true);
+                navigate("/onboarding");
+                dispatch(setLoading(false));
+              }
             } catch (error) {
               setMessage(
                 error.response
                   ? error.response.data.message
                   : "Error sending OTP"
               );
+              dispatch(setLoading(false));
             }
             // const username = user.username;
+            dispatch(setUserData(userDetails));
             localStorage.setItem("authToken", response?.data?.token);
             localStorage.setItem(username, userDetails);
           }
@@ -80,25 +89,21 @@ const Login = () => {
     }
   };
 
-  // const handleEmailLogin = async () => {
-  //   try {
-  //     const response = await axios.post(`${API_URLS.SEND_OTP_URL}`, {
-  //       email,
-  //     });
-  //     setMessage(response.data.message);
-  //     setIsOtpSent(true);
-  //   } catch (error) {
-  //     setMessage(
-  //       error.response ? error.response.data.message : "Error sending OTP"
-  //     );
-  //   }
-  // };
-
-  const handlePhoneLogin = () => {
-    console.log("phone");
+  const handleUserName = (e) => {
+    setUsername(e.target.value);
+    setError(false);
+    setMessage("");
   };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setError(false);
+    setMessage("");
+  };
+
   return (
     <div className="login-main">
+      {isLoading && <Loading />}
       {/* <div className="login-left">
         <img src={Image} alt="" />
       </div> */}
@@ -115,13 +120,13 @@ const Login = () => {
               <input
                 type="username"
                 placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => handleUserName(e)}
               />
               <div className="pass-input-div">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handlePassword(e)}
                 />
                 {showPassword ? (
                   <FaEyeSlash
@@ -139,11 +144,7 @@ const Login = () => {
               </div>
 
               <div className="login-center-options">
-                {error ? (
-                  <p className="login-error-message">{message}</p>
-                ) : (
-                  <p></p>
-                )}
+                {error ? <p className="error-message">{message}</p> : <p></p>}
                 <a href="#" className="forgot-pass-link">
                   Forgot password?
                 </a>

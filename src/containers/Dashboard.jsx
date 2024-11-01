@@ -3,6 +3,7 @@ import Header from "./Headers";
 import axios from "axios";
 import { API_URLS } from "./constants";
 import Cart from "./Cart";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const [mainProducts, setMainProducts] = useState([]);
@@ -12,13 +13,15 @@ const Dashboard = () => {
   const [user, setUser] = useState("");
   const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
-    const users = localStorage.getItem("pavan");
-    const parsedUser = JSON.parse(users);
-    setUser(parsedUser);
-  }, []);
+  const userData = useSelector((state) => state?.auth?.userData);
 
-  // console.log("user", user);
+  useEffect(() => {
+    // const users = localStorage.getItem("pavan");
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser(parsedUser);
+    }
+  }, [userData]);
 
   // Function to increase quantity
   const increaseQuantity = (productId) => {

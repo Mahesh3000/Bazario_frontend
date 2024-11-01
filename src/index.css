@@ -139,7 +139,7 @@ form button[type='button'] {
 
 .login-button{
   width: 100%;
-  padding: 16px;
+  padding: 6px;
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -225,15 +225,24 @@ form button[type='button'] {
   text-decoration: underline;
 }
 
-.login-error-message {
-  color: #dc3545; /* Red color for the error message */
-  margin-bottom: 4px; /* Space below the error message */
-  padding: 4px;
-  font-family: sans-serif;
-  font-size: small;
-  /* border: 1px solid #dc3545; Red border for the error message */
-  /* background-color: #f8d7da; Light red background for the error message */
-  /* border-radius: 5px; Rounded corners for the error message */
+.error-message {
+  color: #d9534f; /* Red color */
+  font-size: 3px; /* Small text */
+  font-family:'Times New Roman', Times, serif;
+  font-weight:900;
+  /* margin-top: 2px; */
+  /* padding: 4px; */
+  /* background-color: #f8d7da; Light red background */
+  /* border: 1px solid #f5c6cb; /* Slightly darker red border */
+  /* border-radius: 4px; */
+}
+
+.form-container {
+  max-height: 400px; /* Adjust based on your needs */
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .header {
@@ -690,3 +699,49 @@ form button[type='button'] {
 }
 
 /* Email.css ends here */
+
+
+/* Loader Css starts here*/
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it appears above other content */
+}
+
+.loader {
+  border: 8px solid rgba(255, 255, 255, 0.3); /* Light color for the border */
+  border-top: 8px solid #ffffff; /* Solid white color for the top */
+  border-radius: 50%; /* Make it circular */
+  width: 60px; /* Width of the loader */
+  height: 60px; /* Height of the loader */
+  animation: spin 1s linear infinite; /* Spin animation */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start from 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Complete a full rotation */
+  }
+}
+
+.loading-text {
+  color: #ffffff; /* Text color */
+  margin-top: 10px; /* Space between loader and text */
+  font-size: 1.2rem; /* Text size */
+}
+
+.checkmark {
+  color: #4caf50; /* Green color for the checkmark */
+  font-size: 3rem; /* Size of the checkmark */
+  margin-bottom: 10px; /* Space between checkmark and text */
+}
+/* Loader Css ends here */

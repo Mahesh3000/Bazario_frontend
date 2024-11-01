@@ -8,7 +8,6 @@ const Header = ({ user }) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(clearAuth());
-
     localStorage.removeItem(user?.username);
     localStorage.removeItem("authToken");
     navigate("/");
