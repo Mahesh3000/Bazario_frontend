@@ -157,20 +157,6 @@ const Login = () => {
                   <img src={GoogleSvg} alt="" />
                   Log In with Google
                 </button> */}
-                {/* <button
-                  type="button"
-                  className="login-button"
-                  onClick={(e) => handleEmailLogin(e)}
-                >
-                  Log In with Email
-                </button>
-                <button
-                  type="button"
-                  className="login-button"
-                  onClick={(e) => handlePhoneLogin(e)}
-                >
-                  Log In with Phone
-                </button> */}
               </div>
             </form>
           </div>

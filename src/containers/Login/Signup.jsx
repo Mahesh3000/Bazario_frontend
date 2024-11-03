@@ -9,7 +9,7 @@ import { API_URLS } from "../constants";
 import LeftSideContainer from "./LeftSideContainer";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../redux";
+import { setLoading, setUserQr } from "../../redux";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -41,34 +41,36 @@ const SignUp = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const mailValid = emailRegex.test(email);
 
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
+    navigate("/onboarding");
+    dispatch(setUserQr(true));
 
-    if (username && email && phoneNumber && password && confirmPassword) {
-      if (mailValid) {
-        const response = await axios.post(`${API_URLS.SIGNUP_API_URL}`, {
-          username,
-          password,
-          email,
-          phoneNumber,
-        });
+    // if (username && email && phoneNumber && password && confirmPassword) {
+    //   if (mailValid) {
+    //     const response = await axios.post(`${API_URLS.SIGNUP_API_URL}`, {
+    //       username,
+    //       password,
+    //       email,
+    //       phoneNumber,
+    //     });
 
-        if (response.status === 201) {
-          if (!response.data.success) {
-            setError(!error);
-            setMessage(response?.data?.message);
-          } else if (response?.data?.success === true) {
-            navigate("/");
-            dispatch(setLoading(false));
-          }
-        } else {
-        }
-      } else {
-        setMessage("Enter Valid Email Address");
-      }
-    } else {
-      setError(true);
-      setMessage("Please Enter All Fileds");
-    }
+    //     if (response.status === 201) {
+    //       if (!response.data.success) {
+    //         setError(!error);
+    //         setMessage(response?.data?.message);
+    //       } else if (response?.data?.success === true) {
+    //         navigate("/onboarding");
+    //         dispatch(setLoading(false));
+    //       }
+    //     } else {
+    //     }
+    //   } else {
+    //     setMessage("Enter Valid Email Address");
+    //   }
+    // } else {
+    //   setError(true);
+    //   setMessage("Please Enter All Fileds");
+    // }
   };
 
   return (

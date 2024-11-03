@@ -5,5 +5,6 @@ export {
   clearAuth,
   setLoading,
   setUserData,
+  setUserQr,
 } from "./actions/authActions";
 export { default as store } from "./store/store";

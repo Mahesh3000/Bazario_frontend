@@ -5,6 +5,7 @@ import {
   CLEAR_AUTH,
   SET_LOADING,
   USER_DATA,
+  NEW_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   token: null,
   isLoading: false,
   userData: "",
+  isNewUser: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -35,6 +37,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         userData: action.payload,
+      };
+    case NEW_USER:
+      return {
+        ...state,
+        isNewUser: action.payload,
       };
     case CLEAR_AUTH:
       return initialState;

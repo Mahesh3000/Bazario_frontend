@@ -44,26 +44,28 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch(`${API_URLS.GET_PRODUCTS_URL}`)
-      .then((response) => {
-        // Check if the response is ok (status code 200-299)
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json(); // Convert response to JSON
-      })
-      .then((data) => {
-        setMainProducts(data);
-        const categorys = Array.from(
-          new Set(data?.map((product) => product?.category))
-        );
-        if (categorys?.length) {
-          setCategories(categorys);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error); // Handle any errors
-      });
+    if (mainProducts?.length === 0) {
+      fetch(`${API_URLS.GET_PRODUCTS_URL}`)
+        .then((response) => {
+          // Check if the response is ok (status code 200-299)
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json(); // Convert response to JSON
+        })
+        .then((data) => {
+          setMainProducts(data);
+          const categorys = Array.from(
+            new Set(data?.map((product) => product?.category))
+          );
+          if (categorys?.length) {
+            setCategories(categorys);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error); // Handle any errors
+        });
+    }
   }, []);
 
   const handleCategoryChange = (category) => {

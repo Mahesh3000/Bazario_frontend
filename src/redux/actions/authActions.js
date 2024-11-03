@@ -4,6 +4,7 @@ import {
   CLEAR_AUTH,
   SET_LOADING,
   USER_DATA,
+  NEW_USER,
 } from "./actionTypes";
 
 // Action creators
@@ -25,6 +26,11 @@ export const setLoading = (isLoading) => ({
 export const setUserData = (userData) => ({
   type: USER_DATA,
   payload: userData,
+});
+
+export const setUserQr = (isNewUser) => ({
+  type: NEW_USER,
+  payload: isNewUser,
 });
 
 export const clearAuth = () => ({
