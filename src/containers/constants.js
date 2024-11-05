@@ -18,6 +18,7 @@ const API_URLS = {
   GET_PRODUCTS_URL: "http://localhost:4000/products",
   SEND_OTP_URL: "http://localhost:4000/send-otp",
   VERIFY_OTP_URL: "http://localhost:4000/verify-otp",
+  GENERATE_QR_URL: "http://localhost:4000/generate-qr",
 };
 
 export { LOGIN_ERRORS, API_URLS };

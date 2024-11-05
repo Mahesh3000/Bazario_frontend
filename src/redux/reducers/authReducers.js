@@ -1,4 +1,3 @@
-// src/redux/reducers/authReducer.js
 import {
   SET_EMAIL,
   SET_TOKEN,
@@ -6,6 +5,8 @@ import {
   SET_LOADING,
   USER_DATA,
   NEW_USER,
+  GENERATED_QR_IMAGE,
+  IS_TOTP_ENABLED,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -14,6 +15,8 @@ const initialState = {
   isLoading: false,
   userData: "",
   isNewUser: false,
+  qrImage: "",
+  isTotpEnabled: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -43,6 +46,19 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isNewUser: action.payload,
       };
+
+    case GENERATED_QR_IMAGE:
+      return {
+        ...state,
+        qrImage: action.payload,
+      };
+
+    case IS_TOTP_ENABLED:
+      return {
+        ...state,
+        isTotpEnabled: action.payload,
+      };
+
     case CLEAR_AUTH:
       return initialState;
     default:

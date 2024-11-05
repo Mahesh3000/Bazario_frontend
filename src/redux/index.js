@@ -6,5 +6,6 @@ export {
   setLoading,
   setUserData,
   setUserQr,
+  setTotpEnabled,
 } from "./actions/authActions";
 export { default as store } from "./store/store";

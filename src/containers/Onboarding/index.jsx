@@ -6,12 +6,16 @@ import QRCode from "./QrCode";
 import Totp from "./Totp";
 
 const Onboarding = () => {
-  const { emailId, isLoading, isNewUser } = useSelector((state) => state.auth);
+  const { emailId, isLoading, isNewUser, isTotpEnabled } = useSelector(
+    (state) => state.auth
+  );
+
+  console.log("isTotpEnabled", isTotpEnabled);
 
   return (
     <div>
       {isLoading && <Loading />}
-      {isNewUser ? <QRCode /> : <Totp />}
+      {isNewUser ? <QRCode /> : isTotpEnabled ? <Totp /> : <Otp />}
     </div>
   );
 };

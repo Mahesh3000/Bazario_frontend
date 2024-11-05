@@ -7,13 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"; // Import Axios
 import { API_URLS } from "../constants";
 import LeftSideContainer from "./LeftSideContainer";
-import { clearAuth, setEmail, setLoading, setUserData } from "../../redux";
+import {
+  clearAuth,
+  setEmail,
+  setLoading,
+  setTotpEnabled,
+  setUserData,
+} from "../../redux";
 import Loading from "./Loading";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { emailId, isLoading } = useSelector((state) => state.auth);
+  const { emailId, isLoading, isTotpEnabled } = useSelector(
+    (state) => state.auth
+  );
 
   const [showPassword, setShowPassword] = useState(false);
   const [onSignup, setOnSignup] = useState(false);
@@ -26,6 +34,8 @@ const Login = () => {
   const signUp = () => {
     navigate("/signup");
   };
+
+  console.log("isTotpEnabled", isTotpEnabled);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,6 +63,9 @@ const Login = () => {
             const emailId = user.email;
             // console.log("emailId", emailId);
             dispatch(setEmail(emailId));
+            if (user?.totp_secret != null) {
+              dispatch(setTotpEnabled(true));
+            }
 
             try {
               const response = await axios.post(`${API_URLS.SEND_OTP_URL}`, {
@@ -61,6 +74,7 @@ const Login = () => {
               // setMessage(response.data.message);
               if (response?.data.success === true) {
                 setIsOtpSent(true);
+
                 navigate("/onboarding");
                 dispatch(setLoading(false));
               }
@@ -72,7 +86,8 @@ const Login = () => {
               );
               dispatch(setLoading(false));
             }
-            // const username = user.username;
+            console.log("userDetails", user);
+
             dispatch(setUserData(userDetails));
             localStorage.setItem("authToken", response?.data?.token);
             localStorage.setItem(username, userDetails);

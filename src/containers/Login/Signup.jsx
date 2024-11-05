@@ -10,6 +10,7 @@ import LeftSideContainer from "./LeftSideContainer";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUserQr } from "../../redux";
+import { setGeneratedQr, setUserData } from "../../redux/actions/authActions";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -42,35 +43,51 @@ const SignUp = () => {
     const mailValid = emailRegex.test(email);
 
     // dispatch(setLoading(true));
-    navigate("/onboarding");
-    dispatch(setUserQr(true));
 
-    // if (username && email && phoneNumber && password && confirmPassword) {
-    //   if (mailValid) {
-    //     const response = await axios.post(`${API_URLS.SIGNUP_API_URL}`, {
-    //       username,
-    //       password,
-    //       email,
-    //       phoneNumber,
-    //     });
+    if (username && email && phoneNumber && password && confirmPassword) {
+      if (mailValid) {
+        const response = await axios.post(`${API_URLS.SIGNUP_API_URL}`, {
+          username,
+          password,
+          email,
+          phoneNumber,
+        });
 
-    //     if (response.status === 201) {
-    //       if (!response.data.success) {
-    //         setError(!error);
-    //         setMessage(response?.data?.message);
-    //       } else if (response?.data?.success === true) {
-    //         navigate("/onboarding");
-    //         dispatch(setLoading(false));
-    //       }
-    //     } else {
-    //     }
-    //   } else {
-    //     setMessage("Enter Valid Email Address");
-    //   }
-    // } else {
-    //   setError(true);
-    //   setMessage("Please Enter All Fileds");
-    // }
+        if (response.status === 200) {
+          if (!response.data.success) {
+            setError(!error);
+            setMessage(response?.data?.message);
+          } else if (response?.data?.success === true) {
+            const secret = response.data.secret; // Adjust according to your API response
+
+            // Call the generate-qr API
+            const qrResponse = await axios.post(
+              `${API_URLS?.GENERATE_QR_URL}`,
+              {
+                username,
+                secret,
+              }
+            );
+
+            if (qrResponse.status === 200) {
+              const qrCode = qrResponse.data.qrCode; // Get the QR code data URL
+              // You can store the QR code in a state to display it later
+              navigate("/onboarding");
+              dispatch(setUserQr(true));
+              dispatch(setUserData(username));
+              dispatch(setGeneratedQr(qrCode));
+              dispatch(setLoading(false));
+            }
+          }
+        } else {
+        }
+      } else {
+        setMessage("Enter Valid Email Address");
+      }
+    } else {
+      setError(true);
+      setMessage("Please Enter All Fileds");
+    }
   };
 
   return (

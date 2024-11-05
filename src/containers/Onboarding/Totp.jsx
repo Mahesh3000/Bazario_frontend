@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Totp = () => {
   const navigate = useNavigate();
@@ -9,29 +10,39 @@ const Totp = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const userData = useSelector((state) => state?.auth?.userData);
+
+  const { isTotpEnabled } = useSelector((state) => state.auth);
+  console.log("userData", userData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/dashboard");
-    // setLoading(true);
-    // setError("");
-    // setSuccess(false);
-    // try {
-    //   const response = await axios.post("http://localhost:4000/verify-totp", {
-    //     totp,
-    //   });
-    //   if (response.data.success) {
-    //     setSuccess(true);
-    //     // Handle successful verification (e.g., redirect the user)
-    //   } else {
-    //     setError("Invalid TOTP. Please try again.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error verifying TOTP:", error);
-    //   setError("An error occurred. Please try again later.");
-    // } finally {
-    //   setLoading(false);
-    // }
+
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+    }
+
+    try {
+      const response = await axios.post("http://localhost:4000/verify-totp", {
+        username: parsedUser?.username,
+        code: totp,
+      });
+      if (response.data.success) {
+        if (isTotpEnabled) {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
+        // Handle successful verification (e.g., redirect the user)
+      } else {
+        setError("Invalid TOTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying TOTP:", error);
+      setError("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBackClick = () => {
