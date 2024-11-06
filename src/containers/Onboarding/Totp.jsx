@@ -24,7 +24,7 @@ const Totp = () => {
 
     try {
       const response = await axios.post("http://localhost:4000/verify-totp", {
-        username: parsedUser?.username,
+        username: userData,
         code: totp,
       });
       if (response.data.success) {
